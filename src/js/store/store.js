@@ -1,5 +1,10 @@
 import PublisherSubscriber from '../lib/publisher-subscriber.js';
 
+/**
+ * Define object with properties: 
+ * {state: {Object instanceof Proxy}, actions:{Object}, mutations: {Objects}, events: {Object instance of PublisherSubscriber}}
+ */
+
 export default class Store {
 
 	constructor(params) {
