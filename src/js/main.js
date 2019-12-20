@@ -1,41 +1,35 @@
-console.log('hello form main.js')
-import PublisherSubscriber from './lib/publisher-subscriber.js';
-import Store from './store/store.js';
+import store from './store/central-store-object/index.js'; 
 
-var obj = new PublisherSubscriber();
-function A(data) {
-	console.log('this is function A');
-	console.log(data);
-}
-function B(data) {
-	console.log('this is function B');
-	console.log(data);
-}
-function C(data) {
-	console.log('this is function C');
-	console.log(data);
-}
-function D(data) {
-	console.log('this is function D');
-	console.log(data);
-}
-let a = obj.subscribe('klikaj', A);
-console.log(a)
-a = obj.subscribe('klikaj', B);
-a = obj.subscribe('klikaj', C);
-a = obj.subscribe('klikaj', D);
-console.log(a)
-obj.publish('klikaj',23)
+// Load up components
+import Count from './components/count.js';
+import List from './components/list.js';
+import Status from './components/status.js';
 
-let store = new Store({state: {
-	counter: 0
-}});
-console.log("the store object is ")
-console.log(store)
-console.log(store.state)
-store.state.counter = 10;
-console.log(store.state)
-store.state.counter = 2;
-console.log(store.state)
-store.state.cockSuccer = 233;
-console.log(store.state)
+// Load up some DOM elements
+const formElement = document.querySelector('.js-form');
+const inputElement = document.querySelector('#new-item-field');
+
+// Add a submit event listener to the form and prevent it from posting back
+formElement.addEventListener('submit', evt => {
+    evt.preventDefault();
+    
+    // Grab the text value of the textbox and trim any whitespace off it
+    let value = inputElement.value.trim();
+    
+    // If there's some content, trigger the action and clear the field, ready for the next item
+    if(value.length) {
+        store.dispatch('addItem', value);
+        inputElement.value = '';
+        inputElement.focus();
+    }
+});
+
+// Instantiate components
+const countInstance = new Count();
+const listInstance = new List();
+const statusInstance = new Status();
+
+// Initial renders
+countInstance.render();
+listInstance.render();
+statusInstance.render();
