@@ -2,7 +2,7 @@ import Store from '../store/store.js';
 
 /**
  * Components will be created as: 
- *  new Component(what_store_object_shall_I_use, what_element_to_will_I_be_attached)
+ *  new Component(what_store_object_shall_I_use, what_DOM_element_will_be_attached_to)
  */ 
 
 export default class Component {
