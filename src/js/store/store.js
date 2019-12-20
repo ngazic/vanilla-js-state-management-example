@@ -21,9 +21,18 @@ export default class Store {
 		if (params.hasOwnProperty('actions')) {
 			self.actions = params.actions;
 		}
-		self.state = new Proxy((params.state || {}), {
+		if(!sessionStorage.getItem("session")) {
+			sessionStorage.setItem("session",JSON.stringify(params.state));
+			console.log(sessionStorage.getItem("session"))
+	}
+	let s = sessionStorage.getItem("session");
+	console.log(JSON.parse(s))
+	self.s = JSON.parse(s);
+	// self.s = s;
+		self.state = new Proxy(self.s, {
 			set: function (object, property, value) {
 				object[property] = value;
+				sessionStorage.setItem("session",JSON.stringify(object))
 				console.log(`state changed ${property} : ${value}`);
 				self.events.publish('state_changed', self.state);
 
